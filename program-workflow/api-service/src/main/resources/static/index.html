@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width-width, initial-scale=1.0">
+    <title>Metadata Sync Interface</title>
+</head>
+<body>
+    <h1>Metadata Sync API Interface</h1>
+    <h2>Full Sync</h2>
+    <form action="/api/metadata/full-sync" method="get">
+        <label for="month">Enter Month (YYYY-MM):</label>
+        <input type="month" id="month" name="month" required>
+        <button type="submit">Get Full Sync Data</button>
+    </form>
+
+    <h2>Delta Sync Between Dates</h2>
+    <form action="/api/metadata/delta-sync-between" method="get">
+        <label for="startDate">Start Date:</label>
+        <input type="date" id="startDate" name="startDate" required>
+        
+        <label for="endDate">End Date:</label>
+        <input type="date" id="endDate" name="endDate" required>
+        
+        <button type="submit">Get Data Between Dates</button>
+    </form>
+</body>
+</html>
