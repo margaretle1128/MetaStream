@@ -2,7 +2,11 @@ package com.example.program_storage_service.model;
 
 import java.util.List;
 
+import org.springframework.data.mongodb.core.index.Indexed;
+
 public class InputProgram {
+    
+    @Indexed(unique = true)
     private String programId;
     private List<Title> titles;
     private List<Description> descriptions;

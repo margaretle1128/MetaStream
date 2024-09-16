@@ -9,6 +9,9 @@ import com.example.ui_backend_service.repository.SequenceRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +40,7 @@ public class ProgramService {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @CacheEvict(value = "programs", allEntries = true)
     public CommonSchemaProgram processAndSaveProgram(CommonSchemaProgram program, String programType) {
         System.out.println("processAndSaveProgram called");
         String programId = determineProgramId(program, programType);
@@ -48,6 +52,7 @@ public class ProgramService {
         return program;
     }
 
+    @CachePut(value = "programs", key = "#program.programId")
     public CommonSchemaProgram updateProgram(CommonSchemaProgram program) {
         updateTimestamps(program);
         CommonSchemaProgram updatedProgram = ingestionDBRepository.save(program);
@@ -55,13 +60,15 @@ public class ProgramService {
         return updatedProgram;
     }
 
+    @Cacheable(value = "allPrograms") 
     public List<CommonSchemaProgram> findAllPrograms() {
         return ingestionDBRepository.findAll();
     }
 
+    @Cacheable(value = "programs", key = "#programId")
     public Optional<CommonSchemaProgram> findProgramById(String programId) {
         return ingestionDBRepository.findById(programId);
-    }
+    } 
 
     public List<CommonSchemaProgram> findProgramsByTitle(String value) {
         return ingestionDBRepository.findByTitles_value(value);

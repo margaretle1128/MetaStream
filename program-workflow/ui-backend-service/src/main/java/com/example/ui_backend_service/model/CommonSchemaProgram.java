@@ -1,6 +1,7 @@
 package com.example.ui_backend_service.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.List;
 import java.util.Date;
@@ -8,6 +9,7 @@ import java.util.Date;
 @Document(collection = "ingestionDB")
 public class CommonSchemaProgram {
     
+    @Indexed(unique = true)
     @Id
     private String programId;
     private List<Title> titles;

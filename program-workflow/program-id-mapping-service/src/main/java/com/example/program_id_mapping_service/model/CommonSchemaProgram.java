@@ -2,8 +2,11 @@ package com.example.program_id_mapping_service.model;
 
 import java.util.List;
 
+import org.springframework.data.mongodb.core.index.Indexed;
+
 public class CommonSchemaProgram {
     
+    @Indexed(unique = true)
     private String programId;
     private List<Title> titles;
     private List<Description> descriptions;
